@@ -1,0 +1,6 @@
+    <package name="struts_core_example" extends="struts-default">  
+        <action name="login" class="com.example.struts2.core.action.LoginAction">  
+            <result name="error">/error.jsp</result>  
+            <result name="success">/welcome.jsp</result>  
+        </action>  
+    </package>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<project name="ant_test" default="init-db">  
+    <property file="src/spring-security-jdbc.properties" />  
+    <path id="project.lib">  
+        <fileset file="WebRoot/WEB-INF/lib" includes="**/*.jar"/>  
+    </path>  
+    <taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="project.lib"/>  
+    <target name="init-db">    
+        <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" src="src/schema.sql" onerror="continue">    
+            <classpath refid="project.lib" />    
+        </sql>    
+        <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">    
+            <dbconfig>    
+                <property name="datatypeFactory" value="org.dbunit.ext.mysql.MySqlDataTypeFactory" />
+                <!-- 
+                <property name="datatypeFactory" value="org.dbunit.ext.h2.H2DataTypeFactory" />
+                <property name="datatypeFactory" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" />
+                 -->
+            </dbconfig>    
+            <classpath refid="project.lib" />    
+            <operation type="CLEAN_INSERT" src="src/default-data.xml" format="flat" />    
+        </dbunit>    
+    </target>  
+</project>  
